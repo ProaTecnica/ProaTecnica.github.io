@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="./proa.jpg" type="image/png">
+  <title>Formulario de Registro</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 20px;
+      background-color: #f4f4f4;
+    }
+
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    td {
+      color: #333;
+    }
+
+    th, td:last-child {
+      text-align: center;
+    }
+
+    button.delete-btn {
+      background-color: #ff3333;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button.delete-btn:hover {
+      background-color: #cc0000;
+    }
+
+  </style>
+</head>
+<body>
+
+  <form class="form-register" action="https://formspree.io/f/mwkdgeqp" method="POST" id="registroForm">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="modelo_pc">Modelo de PC:</label>
+    <input type="text" id="modelo_pc" name="modelo_pc" required>
+
+    <label for="numero_pc">Número de PC:</label>
+    <input type="text" id="numero_pc" name="numero_pc" required>
+
+    <label for="hora_ingreso">Hora de Ingreso:</label>
+    <input type="time" id="hora_ingreso" name="hora_ingreso" required>
+
+    <label for="hora_salida">Hora de Salida:</label>
+    <input type="time" id="hora_salida" name="hora_salida" required>
+    <br>
+    <div>
+        <button type="submit">Enviar formulario</button>
+        <br>
+        <br>
+      <button type="button" onclick="agregarRegistro()">Agregar datos a la tabla</button>
+    </div>
+  </form>
+
+  <table id="tablaRegistros">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Modelo de PC</th>
+        <th>Número de PC</th>
+        <th>Hora de Ingreso</th>
+        <th>Hora de Salida</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Los registros se agregarán aquí dinámicamente -->
+    </tbody>
+  </table>
+
+  <script>
+    function agregarRegistro() {
+      // Obtener los valores del formulario
+      var nombre = document.getElementById('nombre').value;
+      var email = document.getElementById('email').value;
+      var modelo_pc = document.getElementById('modelo_pc').value;
+      var numero_pc = document.getElementById('numero_pc').value;
+      var hora_ingreso = document.getElementById('hora_ingreso').value;
+      var hora_salida = document.getElementById('hora_salida').value;
+
+      // Crear una nueva fila en la tabla
+      var table = document.getElementById('tablaRegistros').getElementsByTagName('tbody')[0];
+      var newRow = table.insertRow(table.rows.length);
+
+      // Insertar celdas con los valores del formulario
+      var cell1 = newRow.insertCell(0);
+      var cell2 = newRow.insertCell(1);
+      var cell3 = newRow.insertCell(2);
+      var cell4 = newRow.insertCell(3);
+      var cell5 = newRow.insertCell(4);
+      var cell6 = newRow.insertCell(5);
+      var cell7 = newRow.insertCell(6);
+
+      cell1.innerHTML = nombre;
+      cell2.innerHTML = email;
+      cell3.innerHTML = modelo_pc;
+      cell4.innerHTML = numero_pc;
+      cell5.innerHTML = hora_ingreso;
+      cell6.innerHTML = hora_salida;
+      cell7.innerHTML = '<button class="delete-btn" onclick="eliminarFila(this)">Eliminar</button>';
+      
+      // Limpiar el formulario después de agregar el registro
+      document.getElementById('registroForm').reset();
+    }
+
+    function eliminarTabla() {
+      var table = document.getElementById('tablaRegistros');
+      var rowCount = table.rows.length;
+
+      // Eliminar todas las filas excepto la primera (encabezados)
+      for (var i = rowCount - 1; i > 0; i--) {
+        table.deleteRow(i);
+      }
+    }
+
+    function eliminarFila(button) {
+      // Obtener la fila a la que pertenece el botón
+      var row = button.parentNode.parentNode;
+      row.parentNode.removeChild(row);
+    }
+  </script>
+
+</body>
+</html>
